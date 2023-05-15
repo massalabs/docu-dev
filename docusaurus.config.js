@@ -69,26 +69,27 @@ const config = {
         items: [
           {
             type: 'docSidebar',
+            sidebarId: 'learnSidebar',
+            position: 'left',
+            label: '💡 Learn',
+          },
+          {
+            type: 'docSidebar',
+            sidebarId: 'buildSidebar',
+            position: 'left',
+            label: '🛠️ Build',
+          },
+          {
+            type: 'docSidebar',
             sidebarId: 'tutorialSidebar',
             position: 'left',
-            label: 'Tutorial',
+            label: '📖 Tutorial',
           },
           {
             type: 'docSidebar',
             sidebarId: 'nodeSidebar',
             position: 'left',
-            label: 'Testnet',
-          },
-          {
-            type: 'docSidebar',
-            sidebarId: 'rpcSidebar',
-            position: 'left',
-            label: 'RPC',
-          },
-          {
-            href: 'https://github.com/massalabs/',
-            label: 'GitHub',
-            position: 'right',
+            label: '🖥 Testnet',
           },
         ],
       },
@@ -100,7 +101,7 @@ const config = {
             items: [
               {
                 label: 'Tutorial',
-                to: '/docs/smart-contract/intro',
+                to: '/docs/tutorial/home',
               },
             ],
           },
