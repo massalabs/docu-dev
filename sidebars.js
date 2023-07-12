@@ -195,6 +195,40 @@ const sidebars = {
       ],
     },
     {
+      type: "category",
+      label: "Massa-Web3",
+      items: [
+        {
+          type: "doc",
+          id: "build/massa-web3/massa-web3-main",
+        },
+        {
+          type: "doc",
+          id: "build/massa-web3/massa-web3-smart-contracts",
+        },
+        {
+          type: "doc",
+          id: "build/massa-web3/massa-web3-events",
+        },
+        {
+          type: "doc",
+          id: "build/massa-web3/massa-web3-wallet",
+        },
+        {
+          type: "doc",
+          id: "build/massa-web3/massa-web3-public-api",
+        },
+        {
+          type: "doc",
+          id: "build/massa-web3/massa-web3-private-api",
+        },
+        {
+          type: "doc",
+          id: "build/massa-web3/massa-web3-utils",
+        },
+      ],
+    },
+    {
       type: "doc",
       id: "build/networks-faucets",
       label: "Networks & Faucets",
