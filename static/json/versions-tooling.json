@@ -1,0 +1,62 @@
+{
+  "title": "Massa Tools Versions Compatibilities",
+  "networks": ["buildnet", "testnet"],
+  "projects": [
+    {
+      "title": "sc-project-initializer",
+      "compatibilities": [
+        { "network": "buildnet", "version": "buildnet" },
+        { "network": "testnet", "version": "latest" }
+      ],
+      "install": "npm install @massalabs/project-initializer"
+    },
+    {
+      "title": "massa-as-sdk",
+      "compatibilities": [
+        { "network": "buildnet", "version": "buildnet" },
+        { "network": "testnet", "version": "latest" }
+      ],
+      "install": "npm install @massalabs/massa-as-sdk"
+    },
+    {
+      "title": "as-types",
+      "compatibilities": [
+        { "network": "buildnet", "version": "buildnet" },
+        { "network": "testnet", "version": "latest" }
+      ],
+      "install": "npm install @massalabs/as-types"
+    },
+    {
+      "title": "as-proba",
+      "compatibilities": [
+        { "network": "buildnet", "version": "buildnet" },
+        { "network": "testnet", "version": "latest" }
+      ],
+      "install": "npm install @massalabs/as-proba"
+    },
+    {
+      "title": "as-transformer",
+      "compatibilities": [
+        { "network": "buildnet", "version": "buildnet" },
+        { "network": "testnet", "version": "latest" }
+      ],
+      "install": "npm install @massalabs/as-transformer"
+    },
+    {
+      "title": "sc-deployer",
+      "compatibilities": [
+        { "network": "buildnet", "version": "buildnet" },
+        { "network": "testnet", "version": "latest" }
+      ],
+      "install": "npm install @massalabs/massa-sc-deployer"
+    },
+    {
+      "title": "massa-web3",
+      "compatibilities": [
+        { "network": "buildnet", "version": "buildnet" },
+        { "network": "testnet", "version": "latest" }
+      ],
+      "install": "npm install @massalabs/massa-web3"
+    }
+  ]
+}
