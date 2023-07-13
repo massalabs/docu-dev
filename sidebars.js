@@ -125,6 +125,22 @@ const sidebars = {
         "<span class='menu__link'><b><small> Build a dApp </small></b></span>",
     },
     {
+      type: "category",
+      label: "Plugin",
+      items: [
+        {
+          type: "doc",
+          id: "build/plugin/create-plugin",
+          label: "Plugin structure",
+        },
+      ],
+
+    },
+    // {
+    //   type: "doc",
+    //   id: "build/plugin",
+    // },
+    {
       type: "doc",
       id: "build/quickstart",
     },
