@@ -3,22 +3,23 @@ id: create-plugin
 title: Plugin creation
 ---
 
-# Creating a module : step by step
+# Creating a plugin : step by step
 
 Let’s take the “Hello world” plugin located [here](https://github.com/massalabs/station-massa-hello-world/tree/main) and use it as an example.
 
 ## Creating the module
 
-You can create a plugin either in go, and use our tailor made package, or do your own, following the requirements
+You can create a plugin either in Go and use our tailor-made package or do your own, following the requirements.
 
-### Create your go plugin
 
-#### Initialize your go project :
+### Create your Go plugin
 
-initialize the go module :
+#### Initialize your Go project :
+
+Initialize the Go module:
 
 ```bash
-go mod init github.com/my-username/my-hello-world
+go mod init github.com/my-username/hello-world
 ```
 
 Install the hello-world package, we will need it later
@@ -27,9 +28,9 @@ Install the hello-world package, we will need it later
 go get github.com/massalabs/station-massa-hello-world
 ```
 
-- Now, you need a logo.
-  - run `mkdir -p web/content && touch web/content/my-hello-world.svg` to create the file
-  - add your custom logo or copy paste this one:
+Now, you need a logo.
+- Run `mkdir -p web/content && touch web/content/hello_world.svg` to create the file.
+- Add your custom logo or copy-paste this one:
 
 ```svg
 <?xml version="1.0" encoding="UTF-8"?>
@@ -66,14 +67,14 @@ go get github.com/massalabs/station-massa-hello-world
 </svg>
 ```
 
-- Now let's create the manifest file :
-  - run `nano manifest.json`
-  - paste the following content, you can change the values with your own :
+Now let's create the manifest file:
+- Run `nano manifest.json` to create and open the file.
+- Paste the following content, replacing the values with your own:
 
 ```json
 {
   "author": "My Name",
-  "name": "my-hello-world",
+  "name": "hello-world",
   "description": "hello world plugin",
   "logo": "hello_world.svg",
   "home": "",
@@ -82,9 +83,10 @@ go get github.com/massalabs/station-massa-hello-world
 }
 ```
 
-- set up the Task file :
-  - run `nano Taskfile.yml`
-  - paste the content of the following [file](https://github.com/massalabs/station-massa-hello-world/blob/main/Taskfile.yml)
+Set up the Task file:
+- Run `nano Taskfile.yml` to create and open the file.
+- Paste the content from the following [file](https://github.com/massalabs/station-massa-hello-world/blob/main/Taskfile.yml).
+
 
 #### Define your plugin
 
@@ -153,7 +155,7 @@ package main
 //go:generate swagger generate server --quiet --target api/server --name hello-world --spec api/swagger.yml --exclude-main
 ```
 
-> This will generate a `cmd/hello-world-server/my-hello-world.go` file, that will be the entry point of your plugin
+> This will generate a `cmd/hello-world-server/hello-world.go` file, that will be the entry point of your plugin
 
 - Implement the necessary endpoints and functionality in your API.
   run `touch api/endpoints.go` and implement the endpoints you defined in the swagger file :
@@ -193,9 +195,9 @@ func Goodbye(params operations.GoodbyeParams) middleware.Responder {
 
 > Here we have implemented the two endpoints we defined in the swagger file
 
-- set the handler for the endpoints
-  - create a my-hello-world.go file in the root of your project : `touch my-hello-world.go`
-  - create a `initializeAPI` function that will initialize the API with its handlers :
+- Set the handler for the endpoints
+  - create a hello-world.go file in the root of your project : `touch hello-world.go`
+  - Create a `initializeAPI` function that will initialize the API with its handlers :
 
 ```go
 package main
@@ -231,7 +233,8 @@ func setupGlobalMiddleware(handler http.Handler) http.Handler {
 }
 ```
 
-- in the `main` function, initialize the API and start the server :
+- In the `main` function, initialize the API and start the server.
+
 
 ```go
 func main() {
@@ -260,8 +263,10 @@ func main() {
 ```
 
 - Run the API on a local server to test and validate its functionality.
-  - let's run the server : `go run my-hello-world.go`
-  - you should see the following output :
+```bash
+go run hello-world.go
+```
+- You should see the following output :
 
 ```bash
 2023/07/12 14:21:00 Serving hello world at http://[::]:37735
@@ -284,7 +289,7 @@ func main() {
 > ```
 
 - register your plugin on massastation
-  - add the following package into the `my-hello-world.go` file : `github.com/massalabs/station-massa-hello-world`
+  - add the following package into the `hello-world.go` file : `github.com/massalabs/station-massa-hello-world`
   - add a server listener to your plugin & register it :
 
 ```go
@@ -306,7 +311,7 @@ func main() {
   - on another terminal, run
 
 ```bash
-curl -X PUT "http://station.massa/plugin/my-name/my-hello-world/api/hello?name=John" -H  "accept: application/json"
+curl -X PUT "http://station.massa/plugin/my-name/hello-world/api/hello?name=John" -H  "accept: application/json"
 ```
 
 - you should see the following output :
@@ -321,7 +326,7 @@ Congratulations! You have created your first plugin. You can now continue to add
 
 To add a web-app to our plugin,
 
-- we first need to add the right endpoint to the `swagger.yml`
+- Add the right endpoint to the `swagger.yml` file.
 
 ```yaml
 /web/{resource}:
@@ -348,7 +353,7 @@ To add a web-app to our plugin,
 ```
 
 - Run `task generate` to generate the new endpoints
-- Then we create a basic html page :
+- Create a basic HTML page.
   `nano web/content/index.html`
   ```html
   <html>
@@ -357,73 +362,75 @@ To add a web-app to our plugin,
     </body>
   </html>
   ```
-- Still in the `web` folder, create `ressources.go` and `endpoints.go`.
+- Add the handler to the `initializeAPI` function.
 
-  - `ressource.go` read the content of the html file and returns it :
+  - Create `ressources.go` and `endpoints.go`.
 
-  ```go
-  package web
+    - `ressource.go` read the content of the html file and returns it :
 
-  import (
-    "embed"
-    "fmt"
-  )
+    ```go
+    package web
 
-  const basePath = "content/"
+    import (
+      "embed"
+      "fmt"
+    )
 
-  //go:embed content
-  var content embed.FS
+    const basePath = "content/"
 
-  func Content(resource string) ([]byte, error) {
-    content, err := content.ReadFile(basePath + resource)
-    if err != nil {
-      return nil, fmt.Errorf("while reading %s in %s: %w", resource, basePath, err)
+    //go:embed content
+    var content embed.FS
+
+    func Content(resource string) ([]byte, error) {
+      content, err := content.ReadFile(basePath + resource)
+      if err != nil {
+        return nil, fmt.Errorf("while reading %s in %s: %w", resource, basePath, err)
+      }
+
+      return content, nil
+    }
+    ```
+
+  - `endpoints.go` points massastation to the right ressource
+
+    ```go
+    package web
+
+    import (
+      "mime"
+      "net/http"
+      "path/filepath"
+
+      "github.com/go-openapi/runtime/middleware"
+      "github.com/massalabs/station-massa-hello-world/api/server/restapi/operations"
+      "github.com/massalabs/station-massa-wallet/pkg/openapi"
+    )
+
+    // webHandle  handles a Web request.
+    func Handle(params operations.WebParams) middleware.Responder {
+      resourceName := params.Resource
+
+      resourceContent, err := Content(resourceName)
+      if err != nil {
+        return operations.NewWebNotFound()
+      }
+
+      fileExtension := filepath.Ext(resourceName)
+
+      mimeType := mime.TypeByExtension(fileExtension)
+
+      header := map[string]string{"Content-Type": mimeType}
+
+      return openapi.NewCustomResponder(resourceContent, header, http.StatusOK)
     }
 
-    return content, nil
-  }
-  ```
-
-- `endpoints.go` points massastation to the right ressource
-
-  ```go
-  package web
-
-  import (
-    "mime"
-    "net/http"
-    "path/filepath"
-
-    "github.com/go-openapi/runtime/middleware"
-    "github.com/massalabs/station-massa-hello-world/api/server/restapi/operations"
-    "github.com/massalabs/station-massa-wallet/pkg/openapi"
-  )
-
-  // webHandle  handles a Web request.
-  func Handle(params operations.WebParams) middleware.Responder {
-    resourceName := params.Resource
-
-    resourceContent, err := Content(resourceName)
-    if err != nil {
-      return operations.NewWebNotFound()
+    // defaultRedirectHandler redirects request to "/" URL to "web/index.html".
+    func DefaultRedirectHandler(_ operations.DefaultPageParams) middleware.Responder {
+      return openapi.NewCustomResponder(nil, map[string]string{"Location": "web/index.html"}, http.StatusPermanentRedirect)
     }
+    ```
 
-    fileExtension := filepath.Ext(resourceName)
-
-    mimeType := mime.TypeByExtension(fileExtension)
-
-    header := map[string]string{"Content-Type": mimeType}
-
-    return openapi.NewCustomResponder(resourceContent, header, http.StatusOK)
-  }
-
-  // defaultRedirectHandler redirects request to "/" URL to "web/index.html".
-  func DefaultRedirectHandler(_ operations.DefaultPageParams) middleware.Responder {
-    return openapi.NewCustomResponder(nil, map[string]string{"Location": "web/index.html"}, http.StatusPermanentRedirect)
-  }
-  ```
-
-- Finaly we need to add the handler to the `initializeAPI` function :
+- Finally we need to add the handler to the `initializeAPI` function :
 
   ```go
 
@@ -436,4 +443,4 @@ To add a web-app to our plugin,
   ```
 
 - Run again `task install-plugin` to install the new version of the plugin
-- Navigate to `http://station.massa/plugin/my-name/my-hello-world/web/index.html` and you should access the html page you created.
+- Navigate to `http://station.massa/plugin/my-name/hello-world/web/index.html` and you should access the html page you created.
