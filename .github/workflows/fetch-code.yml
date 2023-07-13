@@ -1,0 +1,34 @@
+name: Fetch File from Another Repo and Run
+on:
+  push:
+    branches:
+      - 116-fetch-wallet-end-to-end-tests
+
+jobs:
+  fetch-and-run-file:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout this repo
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.MASSABOTCLASSIC }}
+
+      - name: Fetch end-to-end test from other repo
+        run: |
+          curl -H "Accept: application/vnd.github.v3.raw" -o docs/build/code-fetched/wallet/test-wallet.ts https://api.github.com/repos/massalabs/massa-web3/contents/examples/wallet/index.ts?ref=398-test-end-to-end-wallet
+
+      - name: Extract function code
+        run: |
+          node docs/build/code-fetched/wallet/extract-test-code.ts --generate
+
+      - name: Commit Changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          token: ${{ secrets.MASSABOTCLASSIC }}
+          commit_message: "Add fetched file and extracted code"
+          file_pattern: "docs/build/code-fetched/wallet/code-extracted-wallet.json docs/build/code-fetched/wallet/components"
+          commit_author: massabot <info@massa.net>
