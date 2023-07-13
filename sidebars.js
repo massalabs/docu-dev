@@ -164,6 +164,21 @@ const sidebars = {
       ],
     },
     {
+      type: "category",
+      label: "Plugin",
+      items: [
+        {
+          type: "doc",
+          id: "build/plugin/introduction",
+          label: "Introduction",
+        },
+        {
+          type: "doc",
+          id: "build/plugin/guidelines",
+        },
+      ],
+    },
+    {
       type: "html",
       value: "<hr/>",
     },
